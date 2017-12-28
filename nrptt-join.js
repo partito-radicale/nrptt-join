@@ -13,6 +13,33 @@ $(function() {
     $($to).trigger('change');
   };
 
+  var fill_name = function() {
+    var $fn = $('#i_last_name').val()  + ", " + $('#i_first_name').val() ;
+    fill($fn,'#ppf-member-name'); 
+  };
+
+  var fill_membership = function() { 
+     var $kind = "libera";
+    if ( $("#i_kind").val()  === "1" ) {
+      $kind = "RACC";
+    } else {
+      $kind = "MIN";
+    };
+    var $fn = "Membership: " + $("#i_year").val() + " " + $kind + " " + $("#i_country").val() ;
+    fill($fn,'#ppf-membership');
+  };
+
+  var fill_custom = function() {
+     var $kind = "libera";
+    if ( $("#i_kind").val()  === "1" ) {
+      $kind = "RACC";
+    } else {
+      $kind = "MIN";
+    };
+   var $fn = "Membership: " + $("#i_email").val() + " " + $("#i_year").val() + " " + $kind + " " + $("#i_country").val() + "|" + $('#i_last_name').val()  + ", " + $('#i_first_name').val() ; 
+    fill($fn,'#ppf-custom');     
+  };
+
 //   $('.i_year').i_year();
 
 
@@ -436,6 +463,8 @@ $(function() {
     };
     var csrftoken = Cookies.get('csrftoken');
     fill( "Membership: " + $("#i_year").val() + " " + $kind + " " + $("#i_country").val() + " | " + $("#i_first_name").val() + " | " + $("#i_last_name").val() ,'#ppf-item');  
+    fill_membership();
+    fill_custom();
     $('#i_form').validate();
     $("form#paypal-payment-form").submit();
   });
@@ -491,8 +520,8 @@ $(function() {
 
   $("#amount").change(function() {
     if ($('#i_country').val() !== "") {
-      var val = $QUOTE["1"][$("#i_country").val()];
-      if ( $(this).val() < val) {
+      var $val = $QUOTE["0"][$("#i_country").val()];
+      if ( Number($val) > Number($(this).val()) ) {
         $("#amount-less").show();
       } else {
         $("#amount-less").hide();
@@ -504,9 +533,9 @@ $(function() {
 
   $('#i_email').change(function() { fill($(this).val(),'#ppf-email');  });
   $('#i_phone').change(function() { fill($(this).val(),'#ppf-phone');  });
-  $('#i_first_name').change(function() { fill($(this).val(),'#ppf-member-first-name');  });
+  $('#i_first_name').change(function() { fill_name();  });
   $('#i_first_name').change(function() { fill($(this).val(),'#ppf-first-name');  });
-  $('#i_last_name').change(function() { fill($(this).val(),'#ppf-member-last-name');  });
+  $('#i_last_name').change(function() { fill_name();  });
   $('#i_last_name').change(function() { fill($(this).val(),'#ppf-last-name');  });
   $('#i_address1').change(function() { fill($(this).val(),'#ppf-address1');  });
   $('#i_address2').change(function() { fill($(this).val(),'#ppf-address2');  });
