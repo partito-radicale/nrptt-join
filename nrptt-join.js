@@ -15,29 +15,17 @@ $(function() {
 
   var fill_name = function() {
     var $fn = $('#i_last_name').val()  + ", " + $('#i_first_name').val() ;
-    fill($fn,'#ppf-member-name'); 
+    fill($fn,'#ppf-os0'); 
   };
 
   var fill_membership = function() { 
-     var $kind = "libera";
-    if ( $("#i_kind").val()  === "1" ) {
-      $kind = "RACC";
-    } else {
-      $kind = "MIN";
-    };
-    var $fn = "Membership: " + $("#i_year").val() + " " + $kind + " " + $("#i_country").val() ;
-    fill($fn,'#ppf-membership');
+    var $fn = $("#i_address1").val() + "|" + $("#i_address2").val() + "|" + $("#i_zip").val() + "|" + $("#i_city").val() + "|" + $("#i_state").val() + "|" + $("#i_cuntry").val()  ;
+    fill($fn,'#ppf-os1');
   };
 
   var fill_custom = function() {
-     var $kind = "libera";
-    if ( $("#i_kind").val()  === "1" ) {
-      $kind = "RACC";
-    } else {
-      $kind = "MIN";
-    };
-   var $fn = "Membership: " + $("#i_email").val() + " " + $("#i_year").val() + " " + $kind + " " + $("#i_country").val() + "|" + $('#i_last_name').val()  + ", " + $('#i_first_name').val() ; 
-    fill($fn,'#ppf-custom');     
+   var $fn = "TEL: " + $("#i_countrycode").val() + " " + $("#i_phone").val() + " | EMAIL: " + $("#i_email").val(); 
+    fill($fn,'#ppf-custom');
   };
 
 //   $('.i_year').i_year();
@@ -461,12 +449,12 @@ $(function() {
     } else {
       $kind = "MIN";
     };
-    var csrftoken = Cookies.get('csrftoken');
-    fill( "Membership: " + $("#i_year").val() + " " + $kind + " " + $("#i_country").val() + " | " + $("#i_first_name").val() + " | " + $("#i_last_name").val() ,'#ppf-item');  
+    // var csrftoken = Cookies.get('csrftoken');
+    fill( "Membership: " + $("#i_year").val() + " " + $kind + " " + $("#i_country").val() + " | " + $("#i_first_name").val() + " | " + $("#i_last_name").val() ,'#ppf-item_name');  
     fill_membership();
     fill_custom();
     $('#i_form').validate();
-    $("form#paypal-payment-form").submit();
+    // $("form#paypal-payment-form").submit();
   });
 
   // field change
